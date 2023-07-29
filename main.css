@@ -1,0 +1,19 @@
+/* the main */
+.main-page {
+    display: none;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 2fr 2fr 2fr 1fr;
+    width: 30em;
+    height: 80vh;
+}
+/* first line */
+.restart {
+    background-image: url("reload.png");
+    /* background-color:none; */
+    height: 3.5em;
+    aspect-ratio: 1/1;
+    transform: translatex(6em);
+}
+/* main block */
+
+/* last line */

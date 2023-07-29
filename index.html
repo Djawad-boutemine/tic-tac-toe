@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <!-- first page css file -->
+    <link rel="stylesheet" href="css/first.css">
+    <!-- main page css file -->
+    <link rel="stylesheet" href="css/main.css">
+    <!-- reset css file -->
+    <link rel="stylesheet" href="css/reset.css">
+    <!-- fonts family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;600&family=Fraunces:wght@300;700&family=Hanken+Grotesk:wght@500;700;800&family=Kumbh+Sans:wght@400;700&family=Montserrat:wght@500;700&family=Open+Sans:wght@400;700&family=Outfit:wght@400;600;900&family=Poppins:wght@200;400;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <main>
+        <div class="first-page">
+            <h1><span>x</span>o</h1>
+            <div class="choosing-bord">
+                <h3>pick player 1's mark</h3>
+                <div class="xo-box">
+                    <button class="not choosen">x</button>
+                    <button class="choosen">o</button>
+                </div>
+                <p> remember : x goes first</p>
+            </div>
+            <div class="game-buttons">
+                <button id="one-player">new game (vs cpu)</button>
+                <button id="two-players">new game (vs player) </button>
+            </div>
+        </div>
+        <div class="main-page">
+            <h2><span>x</span>o</h2>
+            <div class="turn"> X turn </div>
+            <button class="restart"></button>
+            <button class="game"></button>
+            <button class="game"></button>
+            <button class="game"></button>
+            <button class="game"></button>
+            <button class="game"></button>
+            <button class="game"></button>
+            <button class="game"></button>
+            <button class="game"></button>
+            <button class="game"></button>
+            <div class="x"></div>
+            <div class="tie"></div>
+            <div class="o"></div>
+        </div>
+    </main>
+    <!-- main js file -->
+    <script src="main.js"></script>
+</body>
+
+</html>

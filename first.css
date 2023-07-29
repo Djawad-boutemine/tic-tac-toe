@@ -1,0 +1,192 @@
+* {
+    text-transform: uppercase;
+    font-family: 'Outfit', sans-serif;
+    word-spacing: 0.2em;
+}
+
+main {
+    background-color: #1a2a33;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
+
+/* the position */
+.first-page {
+    display: flex;
+    flex-flow: column nowrap;
+    text-align: center;
+    justify-content: center;
+}
+
+/* the title */
+h1,h2 {
+    color: #f2b137;
+    font-weight: 900;
+}
+
+h1,h2 span {
+    color: #31c3bd;
+}
+
+/* the box */
+.choosing-bord {
+    background-color: #1f3641;
+    width: 100%;
+    padding: 1em;
+    border-radius: 1em;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1.3em;
+    box-shadow: 0 12px 0 0 #18262e;
+}
+
+.choosing-bord h3 {
+    color: #a8bfc9;
+}
+
+.choosing-bord .xo-box {
+    background-color: #1a2a33;
+    display: inline-block;
+    width: 100%;
+    border-radius: 1em;
+}
+
+.choosing-bord .xo-box button {
+    display: inline-block;
+    border: none;
+    font-weight: bold;
+    border-radius: 0.3em;
+    font: 900;
+
+}
+
+.not.choosen {
+    background-color: #1a2a33;
+    color: #a8bfc9;
+}
+
+.choosen {
+    background-color: #a8bfc9;
+    color: #1a2a33;
+}
+
+.choosing-bord p {
+    color: #a8bfc97a;
+}
+
+/* game buttons */
+.game-buttons {
+    width: 100%;
+}
+
+.game-buttons button {
+    color: #1a2a33;
+    display: block;
+    margin-bottom: 1em;
+    border: none;
+    border-radius: 0.6em;
+    font-weight: 600;
+    text-shadow: 0 0 1px black;
+}
+
+.game-buttons #one-player {
+    width: 100%;
+    background-color: #f2b137;
+    box-shadow: inset -2px -11px 0 0 #c3891c;
+}
+
+.game-buttons #two-players {
+    width: 100%;
+    background-color: #31c3bd;
+    box-shadow: inset -1px -10px 0 0 #13a19b;
+}
+
+@media screen and (max-width : 749px) {
+
+    /* the position */
+    .first-page {
+        gap: 3em;
+        width: 22em;
+        height: 70vh;
+    }
+
+    /*the title */
+    h1 {
+        font-size: 2.5em;
+        letter-spacing: 0.2em;
+    }
+
+    /* the box */
+    h3, .choosing-bord p {
+        font-size: 0.8em;
+    }
+
+    .choosing-bord .xo-box {
+        padding: 0.5em 0em;
+    }
+
+    .choosing-bord .xo-box button {
+        font-size: 2em;
+        width: 46%;
+    }
+
+    /* the game buttons */
+    .game-buttons button {
+        padding: 1em 0.7em;
+        font-size: 1.2em;
+
+    }
+    .game-buttons #one-player {
+        box-shadow: inset -2px -7px 0 0 #c3891c;
+    }
+
+    .game-buttons #two-players {
+        box-shadow: inset -1px -7px 0 0 #13a19b;
+    }
+}
+
+@media screen and (min-width : 750px) {
+
+    /* the position */
+    .first-page {
+        gap: 3em;
+        width: 40em;
+        height: 60vh;
+    }
+
+    /*the title */
+    h1 {
+        font-size: 4em;
+        letter-spacing: 0.2em;
+    }
+
+    /* the box */
+    h3, .choosing-bord p {
+        font-size: 1.5em;
+    }
+
+    .choosing-bord .xo-box {
+        padding: 1em 0.7em;
+
+    }
+
+    .choosing-bord .xo-box button {
+        font-size: 3em;
+        width: 49.3%;
+    }
+
+    /* the game buttons */
+    .game-buttons button {
+        font-size: 2em;
+        padding: 0.7em;
+    }
+
+    .game-buttons #one-player {
+        box-shadow: inset -2px -11px 0 0 #c3891c;
+    }
+
+    .game-buttons #two-players {
+        box-shadow: inset -1px -10px 0 0 #13a19b;
+    }
+}
