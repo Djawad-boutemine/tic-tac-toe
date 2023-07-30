@@ -20,12 +20,12 @@ main {
 }
 
 /* the title */
-h1,h2 {
+h1, h2 {
     color: #f2b137;
     font-weight: 900;
 }
 
-h1,h2 span {
+h1 span , h2 span {
     color: #31c3bd;
 }
 
@@ -103,7 +103,9 @@ h1,h2 span {
 }
 
 @media screen and (max-width : 749px) {
-
+    main {
+        min-height: 650px;
+    }
     /* the position */
     .first-page {
         gap: 3em;
@@ -137,6 +139,7 @@ h1,h2 span {
         font-size: 1.2em;
 
     }
+
     .game-buttons #one-player {
         box-shadow: inset -2px -7px 0 0 #c3891c;
     }
@@ -147,6 +150,9 @@ h1,h2 span {
 }
 
 @media screen and (min-width : 750px) {
+    main {
+        min-height: 840px;
+    }
 
     /* the position */
     .first-page {
