@@ -51,20 +51,23 @@ let turn = document.querySelector(".turn");
 
 onePlayer.onclick = function () {
     changePage("main");
-    turn.innerHTML =  "x  turn";
+    turn.innerHTML = "x  turn";
 };
 twoPlayers.onclick = function () {
     changePage("main");
     playingModes.one = false;
     playingModes.two = true;
-    turn.innerHTML =  "x  turn";
+    turn.innerHTML = "x  turn";
 };
 // main page stuff
 let gameBtns = Array.from(document.querySelectorAll(".game"));
 let gameBtnsContent = Array.from(document.querySelectorAll(".game span"))
 let restart = document.querySelector(".restart");
+let charWin = document.querySelector(".winner span");
+let string = document.querySelector(".winner p");
+let container = document.querySelector(".winner");
 // restart button
-function reload(){
+function reload() {
     gameBtnsContent.map(function (ele) {
         ele.innerHTML = "";
         ele.classList = "";
@@ -90,9 +93,44 @@ gameBtns.map(function (ele, index, arr) {
             if (true) { console.log(check(gameBtnsContent)) }
             turn.innerHTML = starter + "  turn";
         }
-        if (check(gameBtnsContent)) {
-            changePage("final");
-        }
+        if (playingModes.one) {
+            
+            if (check(gameBtnsContent)) {
+                changePage("final");
+                if (check(gameBtnsContent) === "x") {
+                    charWin.innerHTML = "";
+                    string.innerHTML = "Winner !";
+                    container.style.cssText = "color : #31c3bd;";
+                } else if (check(gameBtnsContent) === "o") {
+                    charWin.innerHTML = "";
+                    string.innerHTML = "Looser !";
+                    container.style.cssText = "color : #f2b137;";
+                } else if (check(gameBtnsContent) === "tie") {
+                    charWin.innerHTML = "";
+                    string.innerHTML = "Tie";
+                    container.style.cssText = "color : #a8bfc9; padding-right : 1em ;";
+                }
+            }
+
+        } else if (playingModes.two) {
+            if (check(gameBtnsContent)) {
+                changePage("final");
+                if (check(gameBtnsContent) === "x") {
+                    charWin.innerHTML = "x";
+                    string.innerHTML = "takes the round";
+                    container.style.cssText = "color : #31c3bd;";
+                } else if (check(gameBtnsContent) === "o") {
+                    charWin.innerHTML = "o";
+                    string.innerHTML = "takes the round";
+                    container.style.cssText = "color : #f2b137;";
+                } else if (check(gameBtnsContent) === "tie") {
+                    charWin.innerHTML = "";
+                    string.innerHTML = "Tie";
+                    container.style.cssText = "color : #a8bfc9; padding-right : 1em ;";
+                }
+            }
+        };
+
     }
 })
 // x index to x,y index
@@ -150,14 +188,6 @@ function check(array) {
         return "tie"
     }
 }
-
-if (playingModes.one) {
-
-} else if (playingModes.two) {
-    if ( ckeck(gameBtnsContent) === "x") {
-        
-    }
-};
 
 // final page stuff 
 let quit = document.querySelector(".quit");

@@ -14,7 +14,7 @@ main {
 
 /* the position */
 .first-page {
-    display: none;
+    display: flex;
     flex-flow: column nowrap;
     text-align: center;
     justify-content: center;

@@ -15,11 +15,10 @@
 /* the container */
 .final-page {
     width: 100%;
-    height: 15em;
     z-index: 3;
     position: absolute;
     background-color: #243c4a;
-    display: grid;
+    display: none;
     place-items: center;
     text-align: center;
 }
@@ -71,8 +70,12 @@
 }
 
 @media screen and (max-width : 749px) {
+    .final-page {
+        height: 11em;
+    }
+
     .container {
-        padding: 2em;
+        padding: 1em;
         justify-content: space-evenly;
         width: 23em;
     }
@@ -99,6 +102,10 @@
 }
 
 @media screen and (min-width : 750px) {
+    .final-page {
+        height: 15em;
+    }
+
     .container {
         padding: 2em;
         justify-content: space-evenly;
