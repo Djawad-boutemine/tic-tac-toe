@@ -77,6 +77,8 @@ h2 {
     border-radius: .7em;
 }
 
+
+
 @media screen and (max-width : 749px) {
 
     /* the main page */
@@ -122,8 +124,18 @@ h2 {
     /* last line */
     .x, .o, .tie {
         height: 4em;
+        padding: 0.3em
     }
 
+    .x span, .o span, .tie span {
+        font-size:1.3em ;
+        font-weight: 900;
+    }
+
+    .x p, .o p, .tie p {
+        font-size: 1.1em;
+        font-weight: 600;
+    }
 }
 
 @media screen and (min-width : 750px) {
@@ -173,5 +185,16 @@ h2 {
     /* last line */
     .x, .o, .tie {
         height: 5em;
+        padding: 0.5em;
+    }
+
+    .x span, .o span, .tie span {
+        font-size: 1.5em;
+        font-weight: 900;
+    }
+
+    .x p, .o p, .tie p {
+        font-size: 1.2em;
+        font-weight: 600;
     }
 }

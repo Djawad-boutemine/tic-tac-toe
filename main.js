@@ -18,6 +18,7 @@ let changePage = function (page) {
         finalPage.style.cssText = "display : none";
         main.classList.remove("shadow");
         reload();
+        sreload();
     } else if (page == "main") {
         mainPage.style.cssText = "display : grid";
         firstPage.style.cssText = "display : none";
@@ -49,23 +50,44 @@ let onePlayer = document.querySelector("#one-player");
 let twoPlayers = document.querySelector("#two-players");
 let turn = document.querySelector(".turn");
 
+
+let winVars = 0, loseVars = 0, tieVars = 0;
+let blueOneTitle = document.querySelector(".x p");
+let noOneTitle = document.querySelector(".tie p");
+let orangeOneTitle = document.querySelector(".o p");
+let blueOne = document.querySelector(".x span");
+let noOne = document.querySelector(".tie span");
+let orangeOne = document.querySelector(".o span");
+
+
 onePlayer.onclick = function () {
     changePage("main");
     turn.innerHTML = "x  turn";
+    blueOneTitle.innerHTML = "you";
+    orangeOneTitle.innerHTML = "cpu";
+    noOneTitle.innerHTML = "ties";
+    blueOne.innerHTML = winVars;
+    orangeOne.innerHTML = loseVars;
+    noOne.innerHTML = tieVars;
 };
 twoPlayers.onclick = function () {
     changePage("main");
     playingModes.one = false;
     playingModes.two = true;
     turn.innerHTML = "x  turn";
+    blueOneTitle.innerHTML = "x";
+    orangeOneTitle.innerHTML = "o";
+    noOneTitle.innerHTML = "ties";
+    blueOne.innerHTML = winVars;
+    orangeOne.innerHTML = loseVars;
+    noOne.innerHTML = tieVars;
 };
 // main page stuff
 let gameBtns = Array.from(document.querySelectorAll(".game"));
 let gameBtnsContent = Array.from(document.querySelectorAll(".game span"))
 let restart = document.querySelector(".restart");
-let charWin = document.querySelector(".winner span");
-let string = document.querySelector(".winner p");
-let container = document.querySelector(".winner");
+
+
 // restart button
 function reload() {
     gameBtnsContent.map(function (ele) {
@@ -74,6 +96,11 @@ function reload() {
         starter = "x";
     })
     turn.innerHTML = "x  turn";
+}
+function sreload() {
+    winVars = 0;
+    loseVars = 0;
+    tieVars = 0;
 }
 restart.addEventListener("click", function () {
     reload();
@@ -94,20 +121,23 @@ gameBtns.map(function (ele, index, arr) {
             turn.innerHTML = starter + "  turn";
         }
         if (playingModes.one) {
-            
+
             if (check(gameBtnsContent)) {
                 changePage("final");
                 if (check(gameBtnsContent) === "x") {
                     charWin.innerHTML = "";
                     string.innerHTML = "Winner !";
                     container.style.cssText = "color : #31c3bd;";
+                    winVars++;
                 } else if (check(gameBtnsContent) === "o") {
                     charWin.innerHTML = "";
                     string.innerHTML = "Looser !";
+                    loseVars++;
                     container.style.cssText = "color : #f2b137;";
                 } else if (check(gameBtnsContent) === "tie") {
                     charWin.innerHTML = "";
                     string.innerHTML = "Tie";
+                    tieVars++;
                     container.style.cssText = "color : #a8bfc9; padding-right : 1em ;";
                 }
             }
@@ -119,17 +149,23 @@ gameBtns.map(function (ele, index, arr) {
                     charWin.innerHTML = "x";
                     string.innerHTML = "takes the round";
                     container.style.cssText = "color : #31c3bd;";
+                    winVars++;
                 } else if (check(gameBtnsContent) === "o") {
                     charWin.innerHTML = "o";
                     string.innerHTML = "takes the round";
                     container.style.cssText = "color : #f2b137;";
+                    loseVars++;
                 } else if (check(gameBtnsContent) === "tie") {
                     charWin.innerHTML = "";
                     string.innerHTML = "Tie";
+                    tieVars++;
                     container.style.cssText = "color : #a8bfc9; padding-right : 1em ;";
                 }
             }
         };
+        blueOne.innerHTML = winVars;
+        orangeOne.innerHTML = loseVars;
+        noOne.innerHTML = tieVars;
 
     }
 })
@@ -193,6 +229,9 @@ function check(array) {
 let quit = document.querySelector(".quit");
 let next = document.querySelector(".next");
 
+let charWin = document.querySelector(".winner span");
+let string = document.querySelector(".winner p");
+let container = document.querySelector(".winner");
 quit.onclick = function () {
     changePage("first");
 }
