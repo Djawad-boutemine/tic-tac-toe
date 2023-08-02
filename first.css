@@ -9,11 +9,12 @@ main {
     height: 100vh;
     display: grid;
     place-items: center;
+    position: relative;
 }
 
 /* the position */
 .first-page {
-    display: flex;
+    display: none;
     flex-flow: column nowrap;
     text-align: center;
     justify-content: center;
@@ -157,7 +158,7 @@ h1 span , h2 span {
     /* the position */
     .first-page {
         gap: 3em;
-        width: 40em;
+        width: 35em;
         height: 60vh;
     }
 

@@ -1,0 +1,127 @@
+/* the final page */
+/* the black fade */
+.shadow::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #0000009c;
+    opacity: 0.65;
+    z-index: 2;
+}
+
+/* the container */
+.final-page {
+    width: 100%;
+    height: 15em;
+    z-index: 3;
+    position: absolute;
+    background-color: #243c4a;
+    display: grid;
+    place-items: center;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-flow: column nowrap;
+    height: 100%;
+}
+
+.result {
+    color: rgba(255, 255, 255, 0.733);
+    font-weight: 600;
+}
+
+.winner {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.winner p {
+    display: inline-block;
+    font-weight: 600;
+}
+
+.winner span {
+    font-weight: 900;
+    margin-right: 0.3em;
+}
+
+.quit, .next {
+    color: #1a2a33;
+    display: inline-block;
+    font-weight: 600;
+    padding: 0.3em;
+    border-radius: 0.4em;
+    margin-left: 0.5em;
+}
+
+.quit {
+    background-color: #a8bfc9;
+}
+
+.next {
+    background-color: #f2b137;
+    box-shadow: inset -2px -5px 0 0 #c3891c;
+}
+
+@media screen and (max-width : 749px) {
+    .container {
+        padding: 2em;
+        justify-content: space-evenly;
+        width: 23em;
+    }
+
+    .result {
+        font-size: 1em;
+    }
+
+    .winner span {
+        font-size: 2em;
+    }
+
+    .winner p {
+        font-size: 1.5em;
+    }
+
+    .quit {
+        font-size: 1.2em;
+    }
+
+    .next {
+        font-size: 1.2em;
+    }
+}
+
+@media screen and (min-width : 750px) {
+    .container {
+        padding: 2em;
+        justify-content: space-evenly;
+        width: 30em;
+    }
+
+    .result {
+        font-size: 1.2em;
+    }
+
+    .winner span {
+        font-size: 4em;
+    }
+
+    .winner p {
+        font-size: 2em;
+    }
+
+    .quit {
+        font-size: 1.4em;
+    }
+
+    .next {
+        font-size: 1.4em;
+    }
+}

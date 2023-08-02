@@ -1,9 +1,10 @@
 /* the main */
 .main-page {
-    display: none;
+    display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr repeat(3, 2fr) 1.5fr;
     text-align: center;
+    z-index: 1;
 }
 
 /* first line */
@@ -36,17 +37,27 @@ h2 {
     align-self: center;
     aspect-ratio: 1/1;
     box-shadow: inset 0px -5px 0 0 #5e696e90;
+    position: relative;
 }
+
 
 /* main block */
 .game {
     background-color: #1f3641;
     border: none;
-    border-radius: 0.8em;
+    border-radius: 0.4em;
 }
 
 .game, .turn {
     box-shadow: 0 8px 0 0 #18262e;
+}
+
+.blue {
+    color: #31c3bd;
+}
+
+.orange {
+    color: #f2b137;
 }
 
 /* last line */
@@ -103,6 +114,11 @@ h2 {
         width: calc((20em - 2) / 3);
     }
 
+    .blue, .orange {
+        font-size: 3.5em;
+        font-weight: 900;
+    }
+
     /* last line */
     .x, .o, .tie {
         height: 4em;
@@ -114,7 +130,7 @@ h2 {
 
     /* the main page */
     .main-page {
-        width: 30;
+        width: 30em;
         height: 80vh;
         min-height: 700px;
         max-height: 750px;
@@ -130,10 +146,12 @@ h2 {
         font-size: 1.2em;
         padding: 0.4em;
     }
+
     .imgs {
         width: 2em;
         background-size: 2em;
     }
+
     .restart {
         transform: translatex(5.4em);
         height: 3.5em;
@@ -143,6 +161,13 @@ h2 {
     .game {
         aspect-ratio: 1/1;
         width: calc((30em - 3em) / 3);
+    }
+
+    .blue, .orange {
+        font-size: 4.5em;
+        font-weight: 900;
+        /* text-shadow: 0 0 2px #31c3bd; */
+        margin: -5em;
     }
 
     /* last line */
