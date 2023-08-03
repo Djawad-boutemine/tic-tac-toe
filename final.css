@@ -62,6 +62,7 @@
 
 .quit {
     background-color: #a8bfc9;
+    box-shadow: inset -2px -5px 0 0 #909da4;
 }
 
 .next {
@@ -72,6 +73,8 @@
 @media screen and (max-width : 749px) {
     .final-page {
         height: 11em;
+        /* margin-bottom: 15%; */
+        margin-top: 100%;
     }
 
     .container {
@@ -93,11 +96,13 @@
     }
 
     .quit {
-        font-size: 1.2em;
+        font-size: 1.1em;
+        padding: 0.4em 0.7em;
     }
 
     .next {
-        font-size: 1.2em;
+        font-size: 1.1em;
+        padding: 0.4em 0.7em;
     }
 }
 
@@ -125,10 +130,12 @@
     }
 
     .quit {
-        font-size: 1.4em;
+        font-size: 1.2em;
+        padding: 0.5em 0.8em ;
     }
 
     .next {
-        font-size: 1.4em;
+        font-size: 1.2em;
+        padding: 0.5em 0.8em ;
     }
 }

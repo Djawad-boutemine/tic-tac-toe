@@ -110,8 +110,9 @@ h1 span , h2 span {
     /* the position */
     .first-page {
         gap: 3em;
-        width: 22em;
+        width: 18em;
         height: 70vh;
+        margin-bottom: 15%;
     }
 
     /*the title */

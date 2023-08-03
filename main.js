@@ -4,7 +4,7 @@ let playingModes = {
     two: false,
 }
 let starter = "x";
-let first = "you";
+let first = "bot";
 // pages
 let firstPage = document.querySelector(".first-page");
 let mainPage = document.querySelector(".main-page");
@@ -59,6 +59,7 @@ let blueOne = document.querySelector(".x span");
 let noOne = document.querySelector(".tie span");
 let orangeOne = document.querySelector(".o span");
 
+let xo = "x";
 
 onePlayer.onclick = function () {
     changePage("main");
@@ -69,6 +70,12 @@ onePlayer.onclick = function () {
     blueOne.innerHTML = winVars;
     orangeOne.innerHTML = loseVars;
     noOne.innerHTML = tieVars;
+    if (first === "bot") {
+        xo = "x";
+    } else {
+        xo = "o";
+    };
+    if (first == "bot") { bot(gameBtns, gameBtnsContent, xo) };
 };
 twoPlayers.onclick = function () {
     changePage("main");
@@ -117,11 +124,13 @@ gameBtns.map(function (ele, index, arr) {
                 starter = "o";
                 gameBtnsContent[index].classList.add("blue");
             }
-            if (true) { console.log(check(gameBtnsContent)) }
             turn.innerHTML = starter + "  turn";
+            console.log(starter, xo);
+        }
+        if (playingModes.one && starter === xo) {
+            bot(gameBtns, gameBtnsContent, xo);
         }
         if (playingModes.one) {
-
             if (check(gameBtnsContent)) {
                 changePage("final");
                 if (check(gameBtnsContent) === "x") {
@@ -141,7 +150,6 @@ gameBtns.map(function (ele, index, arr) {
                     container.style.cssText = "color : #a8bfc9; padding-right : 1em ;";
                 }
             }
-
         } else if (playingModes.two) {
             if (check(gameBtnsContent)) {
                 changePage("final");
@@ -166,7 +174,6 @@ gameBtns.map(function (ele, index, arr) {
         blueOne.innerHTML = winVars;
         orangeOne.innerHTML = loseVars;
         noOne.innerHTML = tieVars;
-
     }
 })
 // x index to x,y index
@@ -238,3 +245,118 @@ quit.onclick = function () {
 next.onclick = function () {
     changePage("main");
 }
+// bot function
+
+function bot(array1, array2, xo) {
+    let me, him;
+    if (xo == "x") {
+        me = "x";
+        him = "o";
+    } else {
+        me = "o";
+        him = "x";
+    }
+    let yes = true;
+    for (let i = 0; i < 3; i++) {
+        // for bot to win
+        let oCountH = 0, xCountH = 0, oCountV = 0, xCountV = 0;
+        for (let j = 0; j < 3; j++) {
+            if (array2[grid(i, j)].innerHTML === me) { oCountH++ }
+            if (array2[grid(j, i)].innerHTML === me) { oCountV++ }
+            if (array2[grid(i, j)].innerHTML === him) { xCountH++ }
+            if (array2[grid(j, i)].innerHTML === him) { xCountV++ }
+        }
+        if (oCountH === 2 && xCountH === 0) {
+            for (let j = 0; j < 3; j++) {
+                if (array2[grid(i, j)].innerHTML === "") {
+                    array1[grid(i, j)].click();
+                }
+                yes = false;
+            }
+        } else if (oCountV === 2 && xCountV === 0) {
+            for (let j = 0; j < 3; j++) {
+                if (array2[grid(j, i)].innerHTML === "") {
+                    array1[grid(j, i)].click();
+                }
+                yes = false;
+            }
+        } else if (xCountV === 2 && oCountH === 0) {
+            for (let j = 0; j < 3; j++) {
+                if (array2[grid(j, i)].innerHTML === "") {
+                    array1[grid(j, i)].click();
+                }
+                yes = false;
+            }
+        } else if (xCountH === 2 && oCountH === 0) {
+            for (let j = 0; j < 3; j++) {
+                if (array2[grid(i, j)].innerHTML === "") {
+                    array1[grid(i, j)].click();
+                }
+                yes = false;
+            }
+        }
+    }
+    let oDiogonalOne = 0, xDiogonalOne = 0, xDiogonalTwo = 0, oDiogonalTwo = 0;
+    for (let i = 0; i < 3; i++) {
+        array2[grid(i, i)].innerHTML === me ? oDiogonalOne++ : oDiogonalOne;
+        array2[grid(i, i)].innerHTML === him ? xDiogonalOne++ : xDiogonalOne;
+    }
+    for (let i = 0; i < 3; i++) {
+        array2[grid(i, 2 - i)].innerHTML === me ? oDiogonalTwo++ : oDiogonalTwo;
+        array2[grid(i, 2 - i)].innerHTML === me ? xDiogonalTwo++ : xDiogonalTwo;
+    }
+    if (yes) {
+        if (oDiogonalOne === 2) {
+            for (let i = 0; i < 3; i++) {
+                if (array2[grid(i, i)].innerHTML === "") {
+                    array1[grid(i, i)].click();
+                }
+            }
+        } else if (oDiogonalTwo === 2) {
+            for (let i = 0; i < 3; i++) {
+                if (array2[grid(i, 2 - i)].innerHTML === "") {
+                    array1[grid(i, 2 - i)].click();
+                }
+            }
+        } else if (xDiogonalOne === 2) {
+            for (let i = 0; i < 3; i++) {
+                if (array2[grid(i, i)].innerHTML === "") {
+                    array1[grid(i, i)].click();
+                }
+            }
+        } else if (xDiogonalTwo === 2) {
+            for (let i = 0; i < 3; i++) {
+                if (array2[grid(i, 2 - i)].innerHTML === "") {
+                    array1[grid(i, 2 - i)].click();
+                }
+            }
+        } else if (array2[grid(1, 1)].innerHTML === "") {
+            array1[grid(1, 1)].click();
+        } else if (array2[grid(0, 0)].innerHTML === "") {
+            array1[grid(0, 0)].click();
+        } else if (array2[grid(0, 2)].innerHTML === "") {
+            array1[grid(0, 2)].click();
+        } else if (array2[grid(2, 0)].innerHTML === "") {
+            array1[grid(2, 0)].click();
+        } else if (array2[grid(2, 2)].innerHTML === "") {
+            array1[grid(2, 2)].click();
+        } else {
+            for (let i = 0; i < 9; i++) {
+                if (array2[i].innerHTML === "") {
+                    array1[i].click();
+                    break;
+                }
+            }
+        };
+    }
+
+
+    // let xSecondDiagonal = 0, oSecondDiagonal = 0;
+    // for (let i = 0; i < 3; i++) {
+    //     array[grid(i, 2 - i)].innerHTML === "x" ? xSecondDiagonal++ : xSecondDiagonal;
+    //     array[grid(i, 2 - i)].innerHTML === "o" ? oSecondDiagonal++ : oSecondDiagonal;
+    // }
+}
+// setInterval(() => {
+//     gameBtns[1].click();
+// }, 1000);
