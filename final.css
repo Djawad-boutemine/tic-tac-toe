@@ -73,8 +73,8 @@
 @media screen and (max-width : 749px) {
     .final-page {
         height: 11em;
-        /* margin-bottom: 15%; */
-        margin-top: 100%;
+        margin-bottom: 15%;
+        /* margin-top: 100%; */
     }
 
     .container {

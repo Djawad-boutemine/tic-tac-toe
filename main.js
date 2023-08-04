@@ -113,22 +113,24 @@ restart.addEventListener("click", function () {
     reload();
 });
 
+function clic(index) {
+    gameBtnsContent[index].innerHTML = starter;
+    if (starter === "o") {
+        starter = "x";
+        gameBtnsContent[index].classList.add("orange");
+    } else {
+        starter = "o";
+        gameBtnsContent[index].classList.add("blue");
+    }
+    turn.innerHTML = starter + "  turn";
+}
+
 gameBtns.map(function (ele, index, arr) {
     ele.onclick = function () {
         if (gameBtnsContent[index].innerHTML === "") {
-            gameBtnsContent[index].innerHTML = starter;
-            if (starter === "o") {
-                starter = "x";
-                gameBtnsContent[index].classList.add("orange");
-            } else {
-                starter = "o";
-                gameBtnsContent[index].classList.add("blue");
-            }
-            turn.innerHTML = starter + "  turn";
+            clic(index);
             console.log(starter, xo);
-        }
-        if (playingModes.one && starter === xo) {
-            bot(gameBtns, gameBtnsContent, xo);
+            first = "bot";
         }
         if (playingModes.one) {
             if (check(gameBtnsContent)) {
@@ -176,6 +178,14 @@ gameBtns.map(function (ele, index, arr) {
         noOne.innerHTML = tieVars;
     }
 })
+
+setInterval(() => {
+    if (playingModes.one && starter === xo ) {
+        first = "no";
+        bot(gameBtns, gameBtnsContent, xo);
+    }
+}, 100);
+
 // x index to x,y index
 // let grid = function (index) {
 //     let x, y
@@ -269,33 +279,34 @@ function bot(array1, array2, xo) {
         if (oCountH === 2 && xCountH === 0) {
             for (let j = 0; j < 3; j++) {
                 if (array2[grid(i, j)].innerHTML === "") {
-                    array1[grid(i, j)].click();
+                    clic(grid(i, j));
                 }
                 yes = false;
             }
         } else if (oCountV === 2 && xCountV === 0) {
             for (let j = 0; j < 3; j++) {
                 if (array2[grid(j, i)].innerHTML === "") {
-                    array1[grid(j, i)].click();
+                    clic(grid(j, i));
                 }
                 yes = false;
             }
-        } else if (xCountV === 2 && oCountH === 0) {
+        } else if (xCountV === 2 && oCountV === 0) {
             for (let j = 0; j < 3; j++) {
                 if (array2[grid(j, i)].innerHTML === "") {
-                    array1[grid(j, i)].click();
+                    clic(grid(j, i));
                 }
                 yes = false;
             }
         } else if (xCountH === 2 && oCountH === 0) {
             for (let j = 0; j < 3; j++) {
                 if (array2[grid(i, j)].innerHTML === "") {
-                    array1[grid(i, j)].click();
+                    clic(grid(i, j));
                 }
                 yes = false;
             }
         }
     }
+    console.log("h + v ");
     let oDiogonalOne = 0, xDiogonalOne = 0, xDiogonalTwo = 0, oDiogonalTwo = 0;
     for (let i = 0; i < 3; i++) {
         array2[grid(i, i)].innerHTML === me ? oDiogonalOne++ : oDiogonalOne;
@@ -305,47 +316,50 @@ function bot(array1, array2, xo) {
         array2[grid(i, 2 - i)].innerHTML === me ? oDiogonalTwo++ : oDiogonalTwo;
         array2[grid(i, 2 - i)].innerHTML === me ? xDiogonalTwo++ : xDiogonalTwo;
     }
-    if (yes) {
+    console.log(yes);
+    if (yes === true) {
         if (oDiogonalOne === 2) {
             for (let i = 0; i < 3; i++) {
                 if (array2[grid(i, i)].innerHTML === "") {
-                    array1[grid(i, i)].click();
+                    clic(grid(i, i));
                 }
             }
         } else if (oDiogonalTwo === 2) {
             for (let i = 0; i < 3; i++) {
                 if (array2[grid(i, 2 - i)].innerHTML === "") {
-                    array1[grid(i, 2 - i)].click();
+                    clic(grid(i, 2 - i));
                 }
             }
         } else if (xDiogonalOne === 2) {
             for (let i = 0; i < 3; i++) {
                 if (array2[grid(i, i)].innerHTML === "") {
-                    array1[grid(i, i)].click();
+                    clic(grid(i, 2 - i));
                 }
             }
         } else if (xDiogonalTwo === 2) {
             for (let i = 0; i < 3; i++) {
                 if (array2[grid(i, 2 - i)].innerHTML === "") {
-                    array1[grid(i, 2 - i)].click();
+                    clic(grid(i, 2 - i));
                 }
+                console.log("dig 1 ,2 ")
             }
         } else if (array2[grid(1, 1)].innerHTML === "") {
-            array1[grid(1, 1)].click();
+            clic(grid(1, 1));
         } else if (array2[grid(0, 0)].innerHTML === "") {
-            array1[grid(0, 0)].click();
+            clic(grid(0, 0));
         } else if (array2[grid(0, 2)].innerHTML === "") {
-            array1[grid(0, 2)].click();
+            clic(grid(0, 2));
         } else if (array2[grid(2, 0)].innerHTML === "") {
-            array1[grid(2, 0)].click();
+            clic(grid(2, 0));
         } else if (array2[grid(2, 2)].innerHTML === "") {
-            array1[grid(2, 2)].click();
+            clic(grid(2, 2));
         } else {
             for (let i = 0; i < 9; i++) {
                 if (array2[i].innerHTML === "") {
-                    array1[i].click();
+                    clic(i);
                     break;
                 }
+                console.log("else");
             }
         };
     }
