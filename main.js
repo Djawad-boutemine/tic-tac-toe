@@ -61,34 +61,6 @@ let orangeOne = document.querySelector(".o span");
 
 let xo = "x";
 
-onePlayer.onclick = function () {
-    changePage("main");
-    turn.innerHTML = "x  turn";
-    blueOneTitle.innerHTML = "you";
-    orangeOneTitle.innerHTML = "cpu";
-    noOneTitle.innerHTML = "ties";
-    blueOne.innerHTML = winVars;
-    orangeOne.innerHTML = loseVars;
-    noOne.innerHTML = tieVars;
-    if (first === "bot") {
-        xo = "x";
-    } else {
-        xo = "o";
-    };
-    if (first == "bot") { bot(gameBtns, gameBtnsContent, xo) };
-};
-twoPlayers.onclick = function () {
-    changePage("main");
-    playingModes.one = false;
-    playingModes.two = true;
-    turn.innerHTML = "x  turn";
-    blueOneTitle.innerHTML = "x";
-    orangeOneTitle.innerHTML = "o";
-    noOneTitle.innerHTML = "ties";
-    blueOne.innerHTML = winVars;
-    orangeOne.innerHTML = loseVars;
-    noOne.innerHTML = tieVars;
-};
 // main page stuff
 let gameBtns = Array.from(document.querySelectorAll(".game"));
 let gameBtnsContent = Array.from(document.querySelectorAll(".game span"))
@@ -103,6 +75,16 @@ function reload() {
         starter = "x";
     })
     turn.innerHTML = "x  turn";
+    if (playingModes.one) {
+        if (first === "bot") {
+            xo = "x";
+            bot(gameBtnsContent, xo);
+            turns = true;
+        } else {
+            xo = "o";
+            turns = true;
+        };
+    }
 }
 function sreload() {
     winVars = 0;
@@ -112,7 +94,13 @@ function sreload() {
 restart.addEventListener("click", function () {
     reload();
 });
-
+function clicked(ele) {
+    ele.parentNode.style.transform = "scale(0.9)";
+    let no = setInterval(function () {
+        ele.parentNode.style.transform = "scale(1)";
+        clearInterval(no);
+    }, 50)
+}
 function clic(index) {
     gameBtnsContent[index].innerHTML = starter;
     if (starter === "o") {
@@ -123,36 +111,103 @@ function clic(index) {
         gameBtnsContent[index].classList.add("blue");
     }
     turn.innerHTML = starter + "  turn";
+    clicked(gameBtnsContent[index]);
 }
-
-gameBtns.map(function (ele, index, arr) {
-    ele.onclick = function () {
-        if (gameBtnsContent[index].innerHTML === "") {
-            clic(index);
-            console.log(starter, xo);
-            first = "bot";
-        }
-        if (playingModes.one) {
-            if (check(gameBtnsContent)) {
-                changePage("final");
-                if (check(gameBtnsContent) === "x") {
-                    charWin.innerHTML = "";
-                    string.innerHTML = "Winner !";
-                    container.style.cssText = "color : #31c3bd;";
-                    winVars++;
-                } else if (check(gameBtnsContent) === "o") {
-                    charWin.innerHTML = "";
-                    string.innerHTML = "Looser !";
-                    loseVars++;
-                    container.style.cssText = "color : #f2b137;";
-                } else if (check(gameBtnsContent) === "tie") {
-                    charWin.innerHTML = "";
-                    string.innerHTML = "Tie";
-                    tieVars++;
-                    container.style.cssText = "color : #a8bfc9; padding-right : 1em ;";
-                }
+let turns;
+onePlayer.onclick = function () {
+    changePage("main");
+    turn.innerHTML = "x  turn";
+    blueOneTitle.innerHTML = "you";
+    orangeOneTitle.innerHTML = "cpu";
+    noOneTitle.innerHTML = "ties";
+    blueOne.innerHTML = winVars;
+    orangeOne.innerHTML = loseVars;
+    noOne.innerHTML = tieVars;
+    gameBtns.map(function (ele, index) {
+        ele.onclick = function () {
+            if (gameBtnsContent[index].innerHTML === "" && turns) {
+                clic(index);
+                turns = false;
             }
-        } else if (playingModes.two) {
+            // bot playing
+            if (!turns) {
+                setTimeout(() => {
+                    bot(gameBtnsContent, xo);
+                    turns = true;
+                    if (check(gameBtnsContent)) {
+                        changePage("final");
+                        if (check(gameBtnsContent) === "x") {
+                            charWin.innerHTML = "";
+                            if (xo === "x") {
+                                string.innerHTML = "Looser !";
+                            } else { string.innerHTML = "Winner !"; }
+                            container.style.cssText = "color : #31c3bd;";
+                            winVars++;
+                        } else if (check(gameBtnsContent) === "o") {
+                            charWin.innerHTML = "";
+                            if (xo === "x") {
+                                string.innerHTML = "Winner !";
+                            } else { string.innerHTML = "Looser !"; }
+                            loseVars++;
+                            container.style.cssText = "color : #f2b137;";
+                        } else if (check(gameBtnsContent) === "tie") {
+                            charWin.innerHTML = "";
+                            string.innerHTML = "Tie";
+                            tieVars++;
+                            container.style.cssText = "color : #a8bfc9; padding-right : 1em ;";
+                        }
+                    }
+                    blueOne.innerHTML = winVars;
+                    orangeOne.innerHTML = loseVars;
+                    noOne.innerHTML = tieVars;
+                }, 300);
+                if (check(gameBtnsContent)) {
+                    changePage("final");
+                    if (check(gameBtnsContent) === "x") {
+                        charWin.innerHTML = "";
+                        if (xo === "x") {
+                            string.innerHTML = "Looser !";
+                        } else { string.innerHTML = "Winner !"; }
+                        container.style.cssText = "color : #31c3bd;";
+                        winVars++;
+                    } else if (check(gameBtnsContent) === "o") {
+                        charWin.innerHTML = "";
+                        if (xo === "x") {
+                            string.innerHTML = "Winner !";
+                        } else { string.innerHTML = "Looser !"; }
+                        loseVars++;
+                        container.style.cssText = "color : #f2b137;";
+                    } else if (check(gameBtnsContent) === "tie") {
+                        charWin.innerHTML = "";
+                        string.innerHTML = "Tie";
+                        tieVars++;
+                        container.style.cssText = "color : #a8bfc9; padding-right : 1em ;";
+                    }
+                }
+                blueOne.innerHTML = winVars;
+                orangeOne.innerHTML = loseVars;
+                noOne.innerHTML = tieVars;
+            }
+        }
+    })
+
+};
+twoPlayers.onclick = function () {
+    playingModes.one = false;
+    playingModes.two = true;
+    changePage("main");
+    turn.innerHTML = "x  turn";
+    blueOneTitle.innerHTML = "x";
+    orangeOneTitle.innerHTML = "o";
+    noOneTitle.innerHTML = "ties";
+    blueOne.innerHTML = winVars;
+    orangeOne.innerHTML = loseVars;
+    noOne.innerHTML = tieVars;
+    gameBtns.map(function (ele, index) {
+        ele.onclick = function () {
+            if (gameBtnsContent[index].innerHTML === "") {
+                clic(index);
+            }
             if (check(gameBtnsContent)) {
                 changePage("final");
                 if (check(gameBtnsContent) === "x") {
@@ -171,29 +226,16 @@ gameBtns.map(function (ele, index, arr) {
                     tieVars++;
                     container.style.cssText = "color : #a8bfc9; padding-right : 1em ;";
                 }
-            }
-        };
-        blueOne.innerHTML = winVars;
-        orangeOne.innerHTML = loseVars;
-        noOne.innerHTML = tieVars;
-    }
-})
+            };
+            blueOne.innerHTML = winVars;
+            orangeOne.innerHTML = loseVars;
+            noOne.innerHTML = tieVars;
+        }
+    })
+};
 
-setInterval(() => {
-    if (playingModes.one && starter === xo ) {
-        first = "no";
-        bot(gameBtns, gameBtnsContent, xo);
-    }
-}, 100);
-
-// x index to x,y index
-// let grid = function (index) {
-//     let x, y
-//     (index + 1) % 3 === 0 ? x = 3 : x = (index + 1) % 3;
-//     (index + 1) % 3 === 0 ? y = (((index + 1) - ((index + 1) % 3)) / 3) : y = (((index + 1) - ((index + 1) % 3)) / 3) +1 ;
-//     x--;
-//     y--;
-//     return [y,x]
+// if (playingModes.one) {
+//     
 // }
 
 // x,y index to x index
@@ -257,7 +299,7 @@ next.onclick = function () {
 }
 // bot function
 
-function bot(array1, array2, xo) {
+function bot(array2, xo) {
     let me, him;
     if (xo == "x") {
         me = "x";
@@ -265,8 +307,7 @@ function bot(array1, array2, xo) {
     } else {
         me = "o";
         him = "x";
-    }
-    let yes = true;
+    };
     for (let i = 0; i < 3; i++) {
         // for bot to win
         let oCountH = 0, xCountH = 0, oCountV = 0, xCountV = 0;
@@ -280,97 +321,94 @@ function bot(array1, array2, xo) {
             for (let j = 0; j < 3; j++) {
                 if (array2[grid(i, j)].innerHTML === "") {
                     clic(grid(i, j));
+                    return;
                 }
-                yes = false;
             }
-        } else if (oCountV === 2 && xCountV === 0) {
+        }
+        if (oCountV === 2) {
             for (let j = 0; j < 3; j++) {
                 if (array2[grid(j, i)].innerHTML === "") {
                     clic(grid(j, i));
+                    return;
                 }
-                yes = false;
             }
-        } else if (xCountV === 2 && oCountV === 0) {
+        }
+        if (xCountV === 2 && oCountV === 0) {
             for (let j = 0; j < 3; j++) {
                 if (array2[grid(j, i)].innerHTML === "") {
                     clic(grid(j, i));
+                    return;
                 }
-                yes = false;
             }
-        } else if (xCountH === 2 && oCountH === 0) {
+        }
+        if (xCountH === 2 && oCountH === 0) {
             for (let j = 0; j < 3; j++) {
                 if (array2[grid(i, j)].innerHTML === "") {
                     clic(grid(i, j));
+                    return;
                 }
-                yes = false;
             }
         }
-    }
-    console.log("h + v ");
+    };
     let oDiogonalOne = 0, xDiogonalOne = 0, xDiogonalTwo = 0, oDiogonalTwo = 0;
     for (let i = 0; i < 3; i++) {
         array2[grid(i, i)].innerHTML === me ? oDiogonalOne++ : oDiogonalOne;
         array2[grid(i, i)].innerHTML === him ? xDiogonalOne++ : xDiogonalOne;
-    }
+    };
     for (let i = 0; i < 3; i++) {
         array2[grid(i, 2 - i)].innerHTML === me ? oDiogonalTwo++ : oDiogonalTwo;
-        array2[grid(i, 2 - i)].innerHTML === me ? xDiogonalTwo++ : xDiogonalTwo;
-    }
-    console.log(yes);
-    if (yes === true) {
-        if (oDiogonalOne === 2) {
-            for (let i = 0; i < 3; i++) {
-                if (array2[grid(i, i)].innerHTML === "") {
-                    clic(grid(i, i));
-                }
-            }
-        } else if (oDiogonalTwo === 2) {
-            for (let i = 0; i < 3; i++) {
-                if (array2[grid(i, 2 - i)].innerHTML === "") {
-                    clic(grid(i, 2 - i));
-                }
-            }
-        } else if (xDiogonalOne === 2) {
-            for (let i = 0; i < 3; i++) {
-                if (array2[grid(i, i)].innerHTML === "") {
-                    clic(grid(i, 2 - i));
-                }
-            }
-        } else if (xDiogonalTwo === 2) {
-            for (let i = 0; i < 3; i++) {
-                if (array2[grid(i, 2 - i)].innerHTML === "") {
-                    clic(grid(i, 2 - i));
-                }
-                console.log("dig 1 ,2 ")
-            }
-        } else if (array2[grid(1, 1)].innerHTML === "") {
-            clic(grid(1, 1));
-        } else if (array2[grid(0, 0)].innerHTML === "") {
-            clic(grid(0, 0));
-        } else if (array2[grid(0, 2)].innerHTML === "") {
-            clic(grid(0, 2));
-        } else if (array2[grid(2, 0)].innerHTML === "") {
-            clic(grid(2, 0));
-        } else if (array2[grid(2, 2)].innerHTML === "") {
-            clic(grid(2, 2));
-        } else {
-            for (let i = 0; i < 9; i++) {
-                if (array2[i].innerHTML === "") {
-                    clic(i);
-                    break;
-                }
-                console.log("else");
-            }
-        };
-    }
+        array2[grid(i, 2 - i)].innerHTML === him ? xDiogonalTwo++ : xDiogonalTwo;
+    };
 
-
-    // let xSecondDiagonal = 0, oSecondDiagonal = 0;
-    // for (let i = 0; i < 3; i++) {
-    //     array[grid(i, 2 - i)].innerHTML === "x" ? xSecondDiagonal++ : xSecondDiagonal;
-    //     array[grid(i, 2 - i)].innerHTML === "o" ? oSecondDiagonal++ : oSecondDiagonal;
-    // }
+    if (oDiogonalOne === 2) {
+        for (let i = 0; i < 3; i++) {
+            if (array2[grid(i, i)].innerHTML === "") {
+                clic(grid(i, i));
+                return;
+            }
+        }
+    };
+    if (oDiogonalTwo === 2) {
+        for (let i = 0; i < 3; i++) {
+            if (array2[grid(i, 2 - i)].innerHTML === "") {
+                clic(grid(i, 2 - i));
+                return;
+            }
+        }
+    };
+    if (xDiogonalOne === 2) {
+        for (let i = 0; i < 3; i++) {
+            if (array2[grid(i, i)].innerHTML === "") {
+                clic(grid(i, i));
+                return;
+            }
+        }
+    };
+    if (xDiogonalTwo === 2) {
+        for (let i = 0; i < 3; i++) {
+            if (array2[grid(i, 2 - i)].innerHTML === "") {
+                clic(grid(i, 2 - i));
+                return;
+            }
+        }
+    };
+    if (array2[grid(1, 1)].innerHTML === "") {
+        clic(grid(1, 1));
+        return;
+    };
+    let i = 0;
+    while (i < 5) {
+        let x = Math.floor(Math.random() * 9);
+        if (array2[x].innerHTML === "") {
+            clic(x);
+            return;
+        }
+        i++;
+    }
+    for (let i = 0; i < 9; i++) {
+        if (array2[i].innerHTML === "") {
+            clic(i);
+            return;
+        }
+    }
 }
-// setInterval(() => {
-//     gameBtns[1].click();
-// }, 1000);
