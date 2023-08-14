@@ -76,6 +76,7 @@ function reload() {
     })
     turn.innerHTML = "x  turn";
     if (playingModes.one) {
+        gameEnd = false ;
         if (first === "bot") {
             xo = "x";
             bot(gameBtnsContent, xo);
@@ -114,11 +115,17 @@ function clic(index) {
     clicked(gameBtnsContent[index]);
 }
 let turns;
+let gameEnd = false;
 onePlayer.onclick = function () {
     changePage("main");
     turn.innerHTML = "x  turn";
-    blueOneTitle.innerHTML = "you";
-    orangeOneTitle.innerHTML = "cpu";
+    if ( xo === "o"){
+        blueOneTitle.innerHTML = "you";
+        orangeOneTitle.innerHTML = "cpu";
+    }else {
+        blueOneTitle.innerHTML = "cpu";
+        orangeOneTitle.innerHTML = "you";
+    }
     noOneTitle.innerHTML = "ties";
     blueOne.innerHTML = winVars;
     orangeOne.innerHTML = loseVars;
@@ -132,9 +139,39 @@ onePlayer.onclick = function () {
             // bot playing
             if (!turns) {
                 setTimeout(() => {
-                    bot(gameBtnsContent, xo);
-                    turns = true;
                     if (check(gameBtnsContent)) {
+                        gameEnd = true ;
+                        changePage("final");
+                        if (check(gameBtnsContent) === "x") {
+                            charWin.innerHTML = "";
+                            if (xo === "x") {
+                                string.innerHTML = "Looser !";
+                            } else { string.innerHTML = "Winner !"; }
+                            container.style.cssText = "color : #31c3bd;";
+                            winVars++;
+                        } else if (check(gameBtnsContent) === "o") {
+                            charWin.innerHTML = "";
+                            if (xo === "x") {
+                                string.innerHTML = "Winner !";
+                            } else { string.innerHTML = "Looser !"; }
+                            loseVars++;
+                            container.style.cssText = "color : #f2b137;";
+                        } else if (check(gameBtnsContent) === "tie") {
+                            charWin.innerHTML = "";
+                            string.innerHTML = "Tie";
+                            tieVars++;
+                            container.style.cssText = "color : #a8bfc9; padding-right : 1em ;";
+                        }
+                    }
+                    blueOne.innerHTML = winVars;
+                    orangeOne.innerHTML = loseVars;
+                    noOne.innerHTML = tieVars;
+                    if (!gameEnd){
+                        bot(gameBtnsContent, xo);
+                        turns = true;
+                    }
+                    if (check(gameBtnsContent)) {
+                        // gameEnd = true ;
                         changePage("final");
                         if (check(gameBtnsContent) === "x") {
                             charWin.innerHTML = "";
@@ -161,32 +198,6 @@ onePlayer.onclick = function () {
                     orangeOne.innerHTML = loseVars;
                     noOne.innerHTML = tieVars;
                 }, 300);
-                if (check(gameBtnsContent)) {
-                    changePage("final");
-                    if (check(gameBtnsContent) === "x") {
-                        charWin.innerHTML = "";
-                        if (xo === "x") {
-                            string.innerHTML = "Looser !";
-                        } else { string.innerHTML = "Winner !"; }
-                        container.style.cssText = "color : #31c3bd;";
-                        winVars++;
-                    } else if (check(gameBtnsContent) === "o") {
-                        charWin.innerHTML = "";
-                        if (xo === "x") {
-                            string.innerHTML = "Winner !";
-                        } else { string.innerHTML = "Looser !"; }
-                        loseVars++;
-                        container.style.cssText = "color : #f2b137;";
-                    } else if (check(gameBtnsContent) === "tie") {
-                        charWin.innerHTML = "";
-                        string.innerHTML = "Tie";
-                        tieVars++;
-                        container.style.cssText = "color : #a8bfc9; padding-right : 1em ;";
-                    }
-                }
-                blueOne.innerHTML = winVars;
-                orangeOne.innerHTML = loseVars;
-                noOne.innerHTML = tieVars;
             }
         }
     })
@@ -234,9 +245,7 @@ twoPlayers.onclick = function () {
     })
 };
 
-// if (playingModes.one) {
-//     
-// }
+
 
 // x,y index to x index
 let grid = function (x, y) {
@@ -310,14 +319,12 @@ function bot(array2, xo) {
     };
     for (let i = 0; i < 3; i++) {
         // for bot to win
-        let oCountH = 0, xCountH = 0, oCountV = 0, xCountV = 0;
+        let oCountH = 0, oCountV = 0;
         for (let j = 0; j < 3; j++) {
             if (array2[grid(i, j)].innerHTML === me) { oCountH++ }
             if (array2[grid(j, i)].innerHTML === me) { oCountV++ }
-            if (array2[grid(i, j)].innerHTML === him) { xCountH++ }
-            if (array2[grid(j, i)].innerHTML === him) { xCountV++ }
         }
-        if (oCountH === 2 && xCountH === 0) {
+        if (oCountH === 2) {
             for (let j = 0; j < 3; j++) {
                 if (array2[grid(i, j)].innerHTML === "") {
                     clic(grid(i, j));
@@ -333,7 +340,15 @@ function bot(array2, xo) {
                 }
             }
         }
-        if (xCountV === 2 && oCountV === 0) {
+    };
+    for (let i = 0; i < 3; i++) {
+        // for bot to not  lose
+        let  xCountH = 0, xCountV = 0;
+        for (let j = 0; j < 3; j++) {
+            if (array2[grid(i, j)].innerHTML === him) { xCountH++ }
+            if (array2[grid(j, i)].innerHTML === him) { xCountV++ }
+        }
+        if (xCountV === 2) {
             for (let j = 0; j < 3; j++) {
                 if (array2[grid(j, i)].innerHTML === "") {
                     clic(grid(j, i));
@@ -341,7 +356,7 @@ function bot(array2, xo) {
                 }
             }
         }
-        if (xCountH === 2 && oCountH === 0) {
+        if (xCountH === 2) {
             for (let j = 0; j < 3; j++) {
                 if (array2[grid(i, j)].innerHTML === "") {
                     clic(grid(i, j));
